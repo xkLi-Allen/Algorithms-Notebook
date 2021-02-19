@@ -48,11 +48,13 @@ int main(){
     int temp;
     char c;
     int target;
+    cout << "input nums" << endl;
     cin >> input[num++];
     while((c = getchar()) != '\n'){
         cin >> temp;
         input[num++] = temp;
     }
+    cout << "target nums" << endl;
     cin >> target;
     for(int i = 0; i < input.size(); ++i) {
         if (input[i] != init_num)

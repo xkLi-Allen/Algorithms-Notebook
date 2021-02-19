@@ -1,8 +1,11 @@
 {
+
     "files.associations": {
         "iostream": "cpp",
         "vector": "cpp",
         "unordered_map": "cpp",
         "utility": "cpp"
-    }
+        
+    },
+
 }
