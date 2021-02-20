@@ -5,6 +5,7 @@
 #include <map>
 #include <unordered_map>
 using namespace std;
+// https://leetcode-cn.com/problems/two-sum
 int init_num = -10;
 class Solution {
 public:
