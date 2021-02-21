@@ -48,6 +48,9 @@ public:
             }
         }
     }
+    // 时间复杂度：O(log(m+n))，其中 m 和 n 分别是数组 nums1 和 nums2 的长度。初始时有 k=(m+n)/2 或 k=(m+n)/2+1，每一轮循环可以将查找范围减少一半，因此时间复杂度是 O(log(m+n))。
+    // 空间复杂度：O(1)。
+
 
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
         int totalLength = nums1.size() + nums2.size();

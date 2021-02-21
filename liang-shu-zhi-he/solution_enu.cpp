@@ -21,6 +21,8 @@ public:
         }
         return {};
     }
+    // 时间复杂度：O(N^2),其中 N 是数组中的元素数量。最坏情况下数组中任意两个数都要被匹配一次。
+    // 空间复杂度：O(1)。
     vector<int> twoSum_hash(vector<int>& nums, int target) {
         unordered_map<int, int> hashtable;
         for (int i = 0; i < nums.size(); ++i) {
@@ -40,6 +42,9 @@ public:
         }
         cout << endl;
     }
+    // 时间复杂度：O(N)，其中 NN 是数组中的元素数量。对于每一个元素 x，我们可以 O(1) 地寻找 target - x。
+
+    // 空间复杂度：O(N)，其中 NN 是数组中的元素数量。主要为哈希表的开销。
 };
 // 
 int main(){
