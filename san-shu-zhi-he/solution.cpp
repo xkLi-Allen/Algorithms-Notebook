@@ -2,6 +2,7 @@
 # include<vector>
 # include<algorithm>
 using namespace std;
+// https://leetcode-cn.com/problems/3sum/
 int init_num = -10;
 class Solution {
 public:

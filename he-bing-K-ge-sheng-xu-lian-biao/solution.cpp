@@ -1,6 +1,7 @@
 # include<iostream>
 # include<vector>
 using namespace std;
+// https://leetcode-cn.com/problems/merge-k-sorted-lists/
 // Definition for singly-linked list.
 struct ListNode{
     int val;    // 当前结点的值
@@ -16,9 +17,12 @@ public:
         ListNode head, *tail = &head, *aPtr = a, *bPtr = b;
         while (aPtr && bPtr) {
             if (aPtr->val < bPtr->val) {
-                tail->next = aPtr; aPtr = aPtr->next;
-            } else {
-                tail->next = bPtr; bPtr = bPtr->next;
+                tail->next = aPtr; 
+                aPtr = aPtr->next;
+            } 
+            else {
+                tail->next = bPtr; 
+                bPtr = bPtr->next;
             }
             tail = tail->next;
         }

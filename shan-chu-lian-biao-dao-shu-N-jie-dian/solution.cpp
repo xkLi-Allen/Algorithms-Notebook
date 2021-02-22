@@ -1,6 +1,7 @@
 # include<iostream>
 # include<vector>
 using namespace std;
+// https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list
 // Definition for singly-linked list.
 struct ListNode{
     int val;    // 当前结点的值
