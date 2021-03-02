@@ -1,58 +1,61 @@
 ﻿# include<iostream>
 # include<vector>
-# include<algorithm>
 using namespace std;
-// https://leetcode-cn.com/problems/trapping-rain-water/
-int init_num = -10;
-int trap(vector<int>& height)
-{
-	if (height[0] == init_num)
-		return 0;
-	int ans = 0;
-	int size = height.size();
-	vector<int> left_max(size), right_max(size);
-	left_max[0] = height[0];
-	for (int i = 1; i < size; i++) {
-		left_max[i] = max(height[i], left_max[i - 1]);
-	}
-	right_max[size - 1] = height[size - 1];
-	for (int i = size - 2; i >= 0; i--) {
-		right_max[i] = max(height[i], right_max[i + 1]);
-	}
-	for (int i = 1; i < size - 1; i++) {
-		ans += min(left_max[i], right_max[i]) - height[i];
-	}
-	return ans;
-	// 时间复杂度：O(n)。存储最大高度数组，需要两次遍历，每次 O(n) 。最终使用存储的数据更新ans ，O(n)。
-	// 空间复杂度：O(n) 额外空间。
-}
-vector<int> inputclean(vector<int> input) {
-	int n = 0;
-	for (auto element : input) {
-		if (element != init_num) {
-			n++;
-		}
-	}
-	vector<int> inputreturn(n, init_num);
-	n = 0;
-	for (auto element : input) {
-		if (element != init_num) {
-			inputreturn[n++] = element;
-		}
-	}
-	return inputreturn;
-}
+//class Solution {
+//public:
+//	int maximalRectangle(vector<vector<char>>& matrix) {
+//		int m = matrix.size();
+//		if (m == 0) {
+//			return 0;
+//		}
+//		int n = matrix[0].size();
+//		vector<vector<int>> left(m, vector<int>(n, 0));
+//
+//		for (int i = 0; i < m; i++) {
+//			for (int j = 0; j < n; j++) {
+//				if (matrix[i][j] == '1') {
+//					left[i][j] = (j == 0 ? 0 : left[i][j - 1]) + 1;
+//				}
+//			}
+//		}
+//
+//		int ret = 0;
+//		for (int i = 0; i < m; i++) {
+//			for (int j = 0; j < n; j++) {
+//				if (matrix[i][j] == '0') {
+//					continue;
+//				}
+//				int width = left[i][j];
+//				int area = width;
+//				for (int k = i - 1; k >= 0; k--) {
+//					width = min(width, left[k][j]);
+//					area = max(area, (i - k + 1) * width);
+//				}
+//				ret = max(ret, area);
+//			}
+//		}
+//		return ret;
+//	}
+//};
 int main() {
-	vector<int> input(100, init_num);
-	char c;
-	int n = 0;
-	cout << "input numslist" << endl;
-	cin >> input[n++];
-	while ((c = getchar()) != '\n') {
-		cin >> input[n++];
+	int m, n;
+	cout << "input row number" << endl;
+	cin >> m;
+	cout << "input columns number" << endl;
+	cin >> n;
+	cout << "input elements" << endl;
+	vector<vector<char>> matrix(m,vector<char>(n,'a'));
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			cin >> matrix[i][j];
+		}
 	}
-	input = inputclean(input);
-	int answer = trap(input);
-	cout << "answer: " << answer << endl;
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			cout << matrix[i][j] << " ";
+		}
+		cout << endl;
+	}
+
 
 }
