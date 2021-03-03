@@ -2,8 +2,7 @@
 # include<vector>
 # include<algorithm>
 using namespace std;
-// https://leetcode-cn.com/problems/3sum/
-int init_num = -10;
+int init_num = -10000000;
 vector<int> inputclean(vector<int> input){
     int n = 0;
     for(auto element : input){
