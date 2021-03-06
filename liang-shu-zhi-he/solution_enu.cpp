@@ -8,6 +8,7 @@ using namespace std;
 // https://leetcode-cn.com/problems/two-sum
 int init_num = -10;
 class Solution {
+    int init_num = -10;
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
         // 暴力破解
@@ -62,16 +63,15 @@ int main(){
     }
     cout << "target nums" << endl;
     cin >> target;
-    for(int i = 0; i < input.size(); ++i) {
-        if (input[i] != init_num)
-            cout << input[i] << " ";
-    }
+    // for(int i = 0; i < input.size(); ++i) {
+    //     if (input[i] != init_num)
+    //         cout << input[i] << " ";
+    // }
     cout << std::endl;
     Solution solution;
     vector<int> answer = solution.twoSum(input,target);
     solution.Print(answer);
     vector<int> answer_hash = solution.twoSum_hash(input,target);
     solution.Print(answer_hash);
-    cout << "hello world" << endl;
     return 1;
 }
