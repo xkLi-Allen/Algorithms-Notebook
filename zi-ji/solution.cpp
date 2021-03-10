@@ -2,6 +2,7 @@
 # include<vector>
 # include<algorithm>
 using namespace std;
+// https://leetcode-cn.com/problems/subsets/
 int init_num = -10000000;
 class Solution {
 public:
