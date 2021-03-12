@@ -1,35 +1,78 @@
 ﻿# include<iostream>
-# include<vector>
 using namespace std;
-string init_str = "abc";
-vector<string> _inputClean(vector<string> input) {
-	int n = 0;
-	for (auto element : input) {
-		if (element.compare(init_str) != 0) {
-			n++;
+struct BTree {
+	int val;
+	BTree *left;
+	BTree *right;
+	BTree() : val(0), left(nullptr), right(nullptr) {}
+	BTree(int x) : val(x), left(nullptr), right(nullptr) {}
+	BTree(int x, BTree *left, BTree *right) : val(x), left(left), right(right) {}
+};
+class Solution {
+public:
+	void Create(BTree* root, BTree* myAnswer) {
+		if (root == nullptr) {
+			return;
 		}
+
+		myAnswer->val = root->val;
+		myAnswer->left = nullptr;
+		BTree *newNode = new BTree();
+		myAnswer->right = newNode;
+		Create(root->left, myAnswer->right);
+		Create(root->right, myAnswer->right);
 	}
-	vector<string> return_vector(n, init_str);
-	n = 0;
-	for (auto element : input) {
-		if (element.compare(init_str) != 0) {
-			return_vector[n++] = element;
+	void flatten(BTree* root) {
+		BTree *myAnswer = new BTree();
+		Create(root, myAnswer);
+		root = myAnswer;
+	}
+};
+void creatBTree(int data, BTree *root) {
+	BTree *newnode = new BTree(data);
+	if (root == NULL) {
+		root = newnode;
+	}
+	else {
+		BTree *backTree = new BTree();
+		BTree *currentTree = root;
+		while (currentTree != NULL) {
+			backTree = currentTree;
+			if (currentTree->val > data) {
+				currentTree = currentTree->left;
+			}
+			else {
+				currentTree = currentTree->right;
+			}
+		}
+		if (backTree->val > data) {
+			backTree->left = newnode;
+		}
+		else {
+			backTree->right = newnode;
 		}
 	}
 }
+
 int main() {
-	cout << "input str" << endl;
-	vector <string> input(100, init_str);
-	int n = 0;
-	string temp;
-	cin >> temp;
-	input[n++] = temp;
-	char c;
-	while ((c = getchar()) != '\n') {
-		cin >> input[n++];
+	BTree *btree = new BTree(1);
+	int treeArray[] = { 2, 3, 4, 5,6 };
+	int k;
+	k = sizeof(treeArray) / sizeof(treeArray[0]);
+	cout << "create order btree: " << endl;
+	for (int i = 0; i < k; i++) {
+		cout << treeArray[i] << " ";
+		creatBTree(treeArray[i], btree);
 	}
-	input = _inputClean(input);
-	for (auto element : input) {
-		cout << element << " ";
+	cout << endl;
+	BTree *temp = new BTree();
+	Solution solution;
+	solution.Create(btree, temp);
+	cout << "answer: " << endl;
+	while (btree) {
+		cout << btree->val << " ";
+		btree = btree->right;
 	}
+	cout << endl;
+
 }

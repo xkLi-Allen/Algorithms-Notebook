@@ -10,7 +10,11 @@ struct TreeNode {
 	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 	TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
-
+// 二叉树的最大深度
+int maxDepth(TreeNode* root) {
+	if (root == nullptr) return 0;
+	return max(maxDepth(root->left), maxDepth(root->right)) + 1;
+}
 // 创建二叉树(有序)
 void creatTreeNode(int data, TreeNode *root) {
 	TreeNode *newNode = new TreeNode;
