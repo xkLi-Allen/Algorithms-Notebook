@@ -60,6 +60,9 @@ int main(){
     cout << "create result" << endl;
     PrintListNode(l1);
     cout << endl;
+    Solution solution;
+    bool answer = solution.hasCycle(l1);
+    cout << "answer: " << answer << endl;
     
 
 }

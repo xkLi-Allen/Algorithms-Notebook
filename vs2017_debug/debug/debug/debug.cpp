@@ -1,78 +1,53 @@
 ﻿# include<iostream>
+# include<vector>
+# include<unordered_map>
 using namespace std;
-struct BTree {
+struct ListNode {
 	int val;
-	BTree *left;
-	BTree *right;
-	BTree() : val(0), left(nullptr), right(nullptr) {}
-	BTree(int x) : val(x), left(nullptr), right(nullptr) {}
-	BTree(int x, BTree *left, BTree *right) : val(x), left(left), right(right) {}
+	ListNode *next;
+	ListNode(int x) : val(x), next(NULL) {}
 };
-class Solution {
-public:
-	void Create(BTree* root, BTree* myAnswer) {
-		if (root == nullptr) {
-			return;
-		}
 
-		myAnswer->val = root->val;
-		myAnswer->left = nullptr;
-		BTree *newNode = new BTree();
-		myAnswer->right = newNode;
-		Create(root->left, myAnswer->right);
-		Create(root->right, myAnswer->right);
+ListNode *creatListNode(ListNode *l1, int x) {
+	ListNode *head = l1;
+	ListNode *temp = new ListNode(x);
+	if (head == nullptr) {
+		head = temp;
+		return head;
 	}
-	void flatten(BTree* root) {
-		BTree *myAnswer = new BTree();
-		Create(root, myAnswer);
-		root = myAnswer;
+	while (head->next != nullptr) {
+		head = head->next;
 	}
-};
-void creatBTree(int data, BTree *root) {
-	BTree *newnode = new BTree(data);
-	if (root == NULL) {
-		root = newnode;
-	}
-	else {
-		BTree *backTree = new BTree();
-		BTree *currentTree = root;
-		while (currentTree != NULL) {
-			backTree = currentTree;
-			if (currentTree->val > data) {
-				currentTree = currentTree->left;
-			}
-			else {
-				currentTree = currentTree->right;
-			}
-		}
-		if (backTree->val > data) {
-			backTree->left = newnode;
-		}
-		else {
-			backTree->right = newnode;
-		}
-	}
+	head->next = temp;
+	return l1;
+
+
 }
 
+void printList(ListNode *head) {
+	while (head) {
+		cout << head->val << " ";
+		head = head->next;
+	}
+}
 int main() {
-	BTree *btree = new BTree(1);
-	int treeArray[] = { 2, 3, 4, 5,6 };
-	int k;
-	k = sizeof(treeArray) / sizeof(treeArray[0]);
-	cout << "create order btree: " << endl;
-	for (int i = 0; i < k; i++) {
-		cout << treeArray[i] << " ";
-		creatBTree(treeArray[i], btree);
+	char c;
+	vector<int> input;
+	int n = 0;
+	cout << "input numlist" << endl;
+	int temp;
+	cin >> temp;
+	ListNode *l1 = new ListNode(temp);
+	while ((c = getchar()) != '\n') {
+		cin >> temp;
+		input.push_back(temp);
 	}
-	cout << endl;
-	BTree *temp = new BTree();
-	Solution solution;
-	solution.Create(btree, temp);
-	cout << "answer: " << endl;
-	while (btree) {
-		cout << btree->val << " ";
-		btree = btree->right;
+
+	cout << "creating..." << endl;
+	for (auto element : input) {
+		l1 = creatListNode(l1, element);
 	}
-	cout << endl;
+	cout << "create result" << endl;
+	printList(l1);
 
 }
