@@ -1,65 +1,70 @@
 ﻿# include<iostream>
 # include<vector>
-# include<algorithm>
+#include <algorithm>
 using namespace std;
-int init_num = -10000000;
+// Definition for singly-linked list.
+struct ListNode {
+	int val;    // 当前结点的值
+	ListNode *next; // 指向下一个节点的指针
+	ListNode() : val(0), next(nullptr) {}
+	ListNode(int x) : val(x), next(nullptr) {}   // 初始化当前节点值为x，指针为空
+	ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
 class Solution {
-	int count_in_range(vector<int>& nums, int target, int lo, int hi) {
-		int count = 0;
-		for (int i = lo; i <= hi; ++i)
-			if (nums[i] == target)
-				++count;
-		return count;
-	}
-	int majority_element_rec(vector<int>& nums, int lo, int hi) {
-		// 长度为 1 的子数组中唯一的数显然是众数，直接返回即可
-		if (lo == hi)
-			return nums[lo];
-		// 如果回溯后某区间的长度大于 1，我们必须将左右子区间的值合并。如果它们的众数相同，那么显然这一段区间的众数是它们相同的值。
-		// 否则，我们需要比较两个众数在整个区间内出现的次数来决定该区间的众数。
-		int mid = (lo + hi) / 2;    // 第一次执行将数组分为两部分
-		int left_majority = majority_element_rec(nums, lo, mid);        // 左部分不断迭代，直到变为一个数，该数为此时的左部分众数 
-		int right_majority = majority_element_rec(nums, mid + 1, hi);   // 右部分不断迭代，直到变为一个数，该数为此时的右部分众数 
-		if (count_in_range(nums, left_majority, lo, hi) > (hi - lo + 1) / 2)    // 比较此时左部分众数的出现次数，进行众数的合并
-			return left_majority;
-		if (count_in_range(nums, right_majority, lo, hi) > (hi - lo + 1) / 2)   // 比较此时有部分的出现次数，进行众数的合并
-			return right_majority;
-		return -1;
-	}
 public:
-	int majorityElement(vector<int>& nums) {
-		return majority_element_rec(nums, 0, nums.size() - 1);
+	ListNode* reverseListNode(ListNode *head) {
+		ListNode *answer = new ListNode();
+		ListNode *readVal = head;
+		vector<int> tempStore;
+		while (readVal) {
+			tempStore.push_back(readVal->val);
+			readVal = readVal->next;
+		}
+		reverse(tempStore.begin(), tempStore.end());
+		ListNode *current = answer;
+		for (vector<int> ::iterator cur = tempStore.begin(); cur != tempStore.end(); cur++) {
+			ListNode *temp = new ListNode(*cur);
+			current -> next = temp;
+			current = temp;
+		}
+		return answer->next;
 	}
 };
-vector<int> inputclean(vector<int> input) {
-	int n = 0;
-	for (auto element : input) {
-		if (element != init_num) {
-			n++;
+void PrintListNode(ListNode* head)
+{
+	if (head == nullptr)  return;
+	cout << head->val << " "; //顺序输出
+	PrintListNode(head->next);
+	// cout << head->val << " "; //逆序输出
+
+}
+ListNode* inputListNode() {
+	cout << "input elements in ListNode" << endl;
+	char c;
+	int num;
+	ListNode* temp1 = new ListNode; //创建新元素，
+	ListNode* l1 = temp1;           //最后的结果l1指向temp1，这样可以获取temp所接收的全部元素，而temp的指针由于每次都往下移，所以每次都更新
+	cin >> num;
+	temp1->val = num;
+	while ((c = getchar()) != '\n') {   //以空格区分各个结点的值
+		if (c != ' ') {
+			ungetc(c, stdin);       //把不是空格的字符丢回去
+			cin >> num;
+			ListNode* newnode = new ListNode;
+			newnode->val = num;     //创建新的结点存放键盘中读入的值
+			newnode->next = nullptr;
+			temp1->next = newnode;  //并将其赋值给temp2
+			temp1 = newnode;        //此处也可以写成  temp2=temp2->next,使指针指向下一个，以待接收新元素
 		}
 	}
-	vector<int> inputreturn(n, init_num);
-	n = 0;
-	for (auto element : input) {
-		if (element != init_num) {
-			inputreturn[n++] = element;
-		}
-	}
-	return inputreturn;
+	return l1;
 }
 int main() {
-	vector<int> input(100, init_num);
-	char c;
-	int n = 0;
-	cout << "input numslist" << endl;
-	cin >> input[n++];
-	while ((c = getchar()) != '\n') {
-		cin >> input[n++];
-	}
-	input = inputclean(input);
+	ListNode* l1 = inputListNode(); //最后的结果l1指向temp1，这样可以获取temp所接收的全部元素，而temp的指针由于每次都往下移，所以每次都更新
+	cout << "create result" << endl;
+	PrintListNode(l1);
+	cout << endl;
 	Solution solution;
-	int answer = solution.majorityElement(input);
-	cout << "answer: " << answer << endl;
-
-
+	ListNode *answer = solution.reverseListNode(l1);
+	PrintListNode(answer);
 }
