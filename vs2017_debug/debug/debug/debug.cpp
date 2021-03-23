@@ -1,86 +1,30 @@
 ﻿# include<iostream>
-# include<vector>
 # include<algorithm>
+# include<vector>
+# include<limits>
 using namespace std;
-int init_num = -100000;
-// https://leetcode-cn.com/problems/search-a-2d-matrix-ii/
-// 每行的元素从左到右升序排列。
-// 每列的元素从上到下升序排列。
 class Solution {
 public:
-	bool BSearch(vector<vector<int>> matrix, int target, int start, bool vertical) {
-		int low = start;
-		int high = vertical ? matrix.size() - 1 : matrix[1].size() - 1;
-		while (high >= low) {
-			int mid = (low + high) / 2;
-			if (vertical) {
-				if (matrix[start][mid] < target) {
-					low = mid + 1;
-				}
-				else if (matrix[start][mid] > target) {
-					high = mid - 1;
-				}
-				else {
-					return true;
-				}
+	int numSquares(int n) {
+		vector<int> dp(n + 1, 0);	// 首先初始化长度为 n+1 的数组 dp，每个位置都为 0
+		for (int i = 0; i <= n; i++) { // 对数组进行遍历，下标为 i，每次都将当前数字先更新为最大的结果，即 dp[i]=i，比如 i=4，最坏结果为 4=1+1+1+1 即为 4 个数字
+			dp[i] = i;
+			for (int j = 1; i - j * j >= 0; j++) {
+				dp[i] = min(dp[i], dp[i - j * j] + 1);	// 动态转移方程为：dp[i] = MIN(dp[i], dp[i - j * j] + 1)，i 表示当前数字，j*j 表示平方数
 			}
-
-			else {
-				if (matrix[mid][start] > target) {
-					high = mid - 1;
-				}
-				else if (matrix[mid][start] < target) {
-					low = mid + 1;
-				}
-				else {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	bool BSearchMatrix(vector<vector<int>> matrix, int target) {
-		if (matrix.size() == 0 || matrix[1].size() == 0) {
-			return false;
 		}
 
-		int shorterDim = min(matrix.size(), matrix[1].size());
-		for (int i = 0; i < shorterDim; i++) {
-			bool verticalFound = BSearch(matrix, target, i, true);
-			bool horizontalFound = BSearch(matrix, target, i, false);
-			if (verticalFound || horizontalFound) {
-				return true;
-			}
-		}
-		return false;
+
+		return dp[n];
 	}
+	// 时间复杂度：O(n∗sqrt(n))，sqrt 为平方根
 };
 int main() {
-	int m, n;
-	cout << "input row numbers" << endl;
-	cin >> m;
-	cout << "input col numbers" << endl;
+	cout << "input n value" << endl;
+	int n;
 	cin >> n;
-	vector<vector<int>> matrix(m, vector<int>(n, init_num));
-	cout << "input elements" << endl;
-	for (int i = 0; i < m; i++) {
-		for (int j = 0; j < n; j++) {
-			cin >> matrix[i][j];
-		}
-	}
-	// for (auto elements : matrix){
-	//     for (auto element : elements){
-	//         cout << element << " ";
-	//     }
-	//     cout << endl;
-	// }
-	// cout << matrix.size() << " " << matrix[1].size() << endl;
-	cout << "input target value" << endl;
-	int target;
-	cin >> target;
 	Solution solution;
-	bool answer = solution.BSearchMatrix(matrix, target);
-	cout << "answer: " << answer << endl;
-
+	int answer = solution.numSquares(n);
+	cout << "answer: " << answer;
 
 }
