@@ -50,7 +50,10 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "queue": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "cctype": "cpp",
+        "sstream": "cpp",
+        "string": "cpp"
     },
 
 }

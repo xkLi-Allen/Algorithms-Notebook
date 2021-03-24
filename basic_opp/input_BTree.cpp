@@ -52,6 +52,7 @@
 
 # include<iostream>
 # include<vector>
+# include<queue>
 using namespace std;
 #define MAXSIZE 100
 int init_Node = -100;
@@ -61,41 +62,6 @@ struct TreeNode{
     TreeNode *right;
     TreeNode(int x): val(x), left(nullptr), right(nullptr) {}
 };
-
-struct queue                                //队列的数据结构
-{
-	TreeNode *data[MAXSIZE];
-	int front, rear;
-};
-
-void creat(queue &q)                        //创建一个空队列
-{
-	q.front = q.rear = 0;
-}
-
-void enqueue(queue &q, TreeNode *t)         //将t入队    
-{
-	if ((q.rear + 1) % MAXSIZE == q.front)
-	{
-		cout << "queue is full, can not put TreeNode in" << endl;
-		return;
-	}
-	q.rear = (q.rear + 1) % MAXSIZE;
-	q.data[q.rear] = t;
-}
-
-TreeNode *dequeue(queue &q)                 //出队，并返回对头元素
-{
-	TreeNode *t;
-	q.front = (q.front + 1) % MAXSIZE;
-	t= q.data[q.front];	
-	return t;
-}
-
-bool isempty(queue &q)                      //判断队列是否为空
-{
-	return (q.front == q.rear);
-}
  
 TreeNode* creatBTree(vector<int> input){    //按层次顺序创建一棵二叉树，并返回根节点
     //1.先将根节点入队，当队列不为空时，循环执行以下操作：
@@ -104,18 +70,18 @@ TreeNode* creatBTree(vector<int> input){    //按层次顺序创建一棵二叉�
     int val;
     int n = 0;
     val = input[n++];
-    queue Q;
-    creat(Q);
+    queue<TreeNode*> Q;
     TreeNode* root = new TreeNode(init_Node);
     if (val == -1){
         return NULL;
     }
     else{
         root -> val = val;
-        enqueue(Q, root);
+        Q.push(root);
     }
-    while(!isempty(Q)){
-        TreeNode* temp = dequeue(Q);
+    while(!Q.empty()){
+        TreeNode* temp = Q.front();
+        Q.pop();
         val = input[n++];
         if(val == -1){
             temp -> left = nullptr;
@@ -123,7 +89,7 @@ TreeNode* creatBTree(vector<int> input){    //按层次顺序创建一棵二叉�
         else{
             temp -> left = new TreeNode(init_Node);
             temp -> left -> val = val;
-            enqueue(Q, temp -> left);
+            Q.push(temp -> left);
         }
         val = input[n++];
         if(val == -1){
@@ -132,7 +98,7 @@ TreeNode* creatBTree(vector<int> input){    //按层次顺序创建一棵二叉�
         else{
             temp -> right = new TreeNode(init_Node);
             temp -> right -> val = val;
-            enqueue(Q, temp -> right);
+            Q.push(temp -> right);
         }
     }
     return root;
@@ -143,21 +109,21 @@ void showBTree(TreeNode *root){             //层次遍历二叉树
 	//2.出队一个元素，访问它
 	//3.若左子树不为空，将其入队
 	//4.若右子树不为空，将其入队
-    queue Q;
+    queue<TreeNode*> Q;
     TreeNode *temp;
-    creat(Q);
     if (root == NULL){
         return;
     }
-    enqueue(Q, root);
-    while(!isempty(Q)){
-        temp = dequeue(Q);
+    Q.push(root);
+    while(!Q.empty()){
+        temp = Q.front();
+        Q.pop();
         cout << temp -> val << " ";
         if (temp -> left){
-            enqueue(Q, temp -> left);
+            Q.push(temp -> left);
         }
         if (temp -> right){
-            enqueue(Q, temp -> right);
+            Q.push(temp -> right);
         }
     }
     cout << endl;
