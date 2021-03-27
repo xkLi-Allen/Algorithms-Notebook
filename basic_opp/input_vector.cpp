@@ -44,7 +44,6 @@ using namespace std;
 int main(){
     vector<int> input;
     char c;
-    int n = 0;
     cout << "input numslist" << endl;
     int temp;
     cin >> temp;

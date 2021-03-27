@@ -53,7 +53,8 @@
         "set": "cpp",
         "cctype": "cpp",
         "sstream": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "numeric": "cpp"
     },
 
 }
